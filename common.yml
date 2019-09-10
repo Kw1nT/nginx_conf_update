@@ -4,5 +4,4 @@
   become: yes
   gather_facts: yes
   roles:
-
-    - { role: nginx_update,                      tags: nginx_update               }
+    - { role: nginx,                      tags: nginx              }
