@@ -1,0 +1,8 @@
+---
+- name: Common role deploy
+  hosts: all
+  become: yes
+  gather_facts: yes
+  roles:
+
+    - { role: nginx_update,                      tags: nginx_update               }
