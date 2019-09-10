@@ -1,0 +1,4 @@
+sitename: bob-test-works
+nginx_path: /etc/nginx
+nginx_vhost_available: "{{ nginx_path }}/sites-available"
+nginx_vhost_enabled: "{{ nginx_path }}/sites-enabled"

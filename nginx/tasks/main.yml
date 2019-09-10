@@ -1,0 +1,37 @@
+---
+- name: ensure nginx is at the latest version
+  package: 
+    name: nginx 
+    state: latest
+
+- name: Redeploy nginx conf
+  template:
+    src: "nginx.conf.tpl.j2"
+    dest: "{{ nginx_path }}/nginx.conf"
+    remote_src: no
+
+- name: Redeploy nginx vhost conf
+  template:
+    src: "vhost.com.conf.tpl.j2"
+    dest: "{{ nginx_vhost_available }}/{{ sitename }}.com.conf"
+    remote_src: no
+
+- name: Create site directory
+  file:
+    path: "/var/www/{{ sitename }}/html"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: 0775
+
+- name: Add index page of site
+  template:
+    src: index.html.j2
+    dest: "/var/www/{{ sitename }}/html/index.html"
+
+- name: Enable virtual site
+  file:
+    src: "{{ nginx_vhost_available }}/{{ sitename }}.com.conf"
+    dest: "{{ nginx_vhost_enabled }}/{{ sitename }}.com.conf"
+    state: link
+  notify: nginx_restart
