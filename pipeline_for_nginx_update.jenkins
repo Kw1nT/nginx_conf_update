@@ -17,9 +17,17 @@ pipeline {
                 sh 'git clone https://github.com/Kw1nT/nginx_conf_update temp_git'
                }
             }
+        stage("Check playbook syntax") {
+            steps {
+                playbook_name = sh (
+                    script: 'ansible-playbook --syntax-check -i temp_git/hosts temp_git/common.yml | awk -F'playbook: ' '{print $2}'',
+                    returnStdout: true).trim()
+                echo "ANSIBLE_PLAYBOOK: ${playbook_name}"
+                    }
+            }
         stage("Start ansible playbook") {
             steps {
-                sh 'ansible-playbook -i temp_git/hosts temp_git/common.yml --tags nginx'
+                sh 'ansible-playbook -i temp_git/hosts temp_git/${playbook_name} --tags nginx'
               }
            }
         stage("Remove temporary directory") {
