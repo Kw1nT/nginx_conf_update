@@ -13,14 +13,12 @@ pipeline {
     stages {
         stage("Git clone") {
             steps {
-                dir("/tmp/") {
-                sh 'git clone https://github.com/Kw1nT/nginx_conf_update'
-                }
-              }
+                sh 'git clone https://github.com/Kw1nT/nginx_conf_update && pwd '
+               }
             }
-        stage("SECOND_STEP") {
+        stage("Start ansible playbook") {
             steps {
-                sh 'ssh root@ua-vn-bob02 \'uptime\''
+                sh 'uptime'
               }
            }
         }
