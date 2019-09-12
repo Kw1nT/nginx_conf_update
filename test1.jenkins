@@ -11,9 +11,9 @@ pipeline {
         timestamps()
         }
     stages {
-        stage("FIRST_STEP") {
-            steps {
-                sh 'ssh root@ua-vn-bob02 \'hostname\''
+        stage("Git clone") {
+            dir("/tmp") {
+                sh 'git clone https://github.com/Kw1nT/nginx_conf_update'
                 }      
             }
         stage("SECOND_STEP") {
