@@ -13,13 +13,19 @@ pipeline {
     stages {
         stage("Git clone") {
             steps {
-                sh 'git clone https://github.com/Kw1nT/nginx_conf_update'
+                sh 'mkdir -p temp_git
+                sh 'git clone https://github.com/Kw1nT/nginx_conf_update temp_git'
                }
             }
         stage("Start ansible playbook") {
             steps {
-                sh 'ansible-playbook -i hosts common.yml --tags nginx'
+                sh 'ansible-playbook -i temp_git/hosts temp_git/common.yml --tags nginx'
               }
            }
+        stage("Remove temporary directory") {
+            steps {
+                sh 'rm -Rd temp_git'
+            }
+          }
         }
      }
