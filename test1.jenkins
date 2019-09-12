@@ -12,9 +12,11 @@ pipeline {
         }
     stages {
         stage("Git clone") {
-            dir("/tmp") {
+            steps {
+                dir("/tmp") {
                 sh 'git clone https://github.com/Kw1nT/nginx_conf_update'
-                }      
+                }
+              }
             }
         stage("SECOND_STEP") {
             steps {
