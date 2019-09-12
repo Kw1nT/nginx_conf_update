@@ -1,0 +1,21 @@
+#!groovy
+properties([disableConcurrentBuilds()])
+
+pipeline {
+    agent {
+        label 'master'
+        }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+        timestamps()
+        }
+    stages {
+        stage("FIRST_STEP") {
+           sh 'ssh root@ua-vn-bob02 \'hostname\''
+           }
+        stage("SECOND_STEP") {
+           sh 'ssh root@ua-vn-bob02 \'uptime\''
+           }
+        }
+     }
+}
