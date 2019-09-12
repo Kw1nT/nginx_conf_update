@@ -11,10 +11,14 @@ pipeline {
         }
     stages {
         stage("FIRST_STEP") {
-           sh 'ssh root@ua-vn-bob02 \'hostname\''
-           }
+            steps {
+                sh 'ssh root@ua-vn-bob02 \'hostname\''
+                }      
+            }
         stage("SECOND_STEP") {
-           sh 'ssh root@ua-vn-bob02 \'uptime\''
+            steps {
+                sh 'ssh root@ua-vn-bob02 \'uptime\''
+              }
            }
         }
      }
