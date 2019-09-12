@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage("Git clone") {
             steps {
-                dir("/tmp") {
+                dir("/tmp/") {
                 sh 'git clone https://github.com/Kw1nT/nginx_conf_update'
                 }
               }
