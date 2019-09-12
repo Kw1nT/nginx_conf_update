@@ -19,9 +19,11 @@ pipeline {
             }
         stage("Check playbook syntax") {
             steps {
-                playbook_name = sh (
-                    script: 'ansible-playbook --syntax-check -i temp_git/hosts temp_git/common.yml | awk -F`playbook: ` `{print $2}`',
+                script{
+                    playbook_name = sh (
+                    script: 'ansible-playbook --syntax-check -i temp_git/hosts temp_git/common.yml | awk -F\'playbook: \' \'{print $2}\'',
                     returnStdout: true).trim()
+                      }
                 echo "ANSIBLE_PLAYBOOK: ${playbook_name}"
                     }
             }
