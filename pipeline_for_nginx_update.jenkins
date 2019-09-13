@@ -28,13 +28,15 @@ pipeline {
         }
         stage("Run ansible-playbook") {
             steps{
-            if (${playbook_name} == null || ${playbook_name}.length() == 0) {
-                echo "ANSIBLE PLAYBOOK not executed due to syntax problem"
-            }
-            else {
-               sh "ansible-playbook -i temp_git/hosts ${playbook_name} --tags nginx"
-                  }
-            }
+                script{
+                    if (${playbook_name} == null || ${playbook_name}.length() == 0) {
+                        echo "ANSIBLE PLAYBOOK not executed due to syntax problem"
+                        }
+                    else {
+                        sh "ansible-playbook -i temp_git/hosts ${playbook_name} --tags nginx"
+                         } 
+                       }
+                 }
         }
         }
     post {
