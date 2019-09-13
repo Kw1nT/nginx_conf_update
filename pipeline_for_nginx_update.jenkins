@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script{
                     playbook_name = sh (
-                        script: "ansible-playbook --syntax-check -i ${git_dir}/hosts ${git_dir}/common.yml | awk -F\'playbook: \' \'{print $2}\'",
+                        script: '''ansible-playbook --syntax-check -i ${git_dir}/hosts ${git_dir}/common.yml | awk -F\'playbook: \' \'{print $2}\'''',
                     returnStdout: true).trim()
                       }
                    }
