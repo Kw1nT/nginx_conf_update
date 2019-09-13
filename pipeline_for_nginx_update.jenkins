@@ -27,6 +27,11 @@ pipeline {
                    }
         }
         stage("Run ansible-playbook") {
+            when {
+                expression {
+                    return ${playbook_name}.isEmpty()
+                }
+            }
             steps {
                  sh "ansible-playbook -i temp_git/hosts ${playbook_name} --tags nginx"
                  }
