@@ -17,7 +17,7 @@ pipeline {
                 sh 'git clone https://github.com/Kw1nT/nginx_conf_update temp_git'
                }
             }
-        stage("Check playbook syntax") {
+        stage("Check ansible-playbook syntax") {
             steps {
                 script{
                     playbook_name = sh (
@@ -26,11 +26,20 @@ pipeline {
                       }
                    }
         }
+        stage("Check ansible connectivity") {
+            steps {
+                script{
+                    connectivity_status = sh (
+                        script: 'ansible -i temp_git/hosts all -m ping | grep -o -E "SUCCESS|UNREACHABLE"',
+                    returnStdout: true).trim()
+                      }
+                   }
+        }
         stage("Run ansible-playbook") {
             steps {
                 script{
-                if (playbook_name.isEmpty()) {
-                    echo "123"
+                    if (playbook_name.isEmpty() || "${connectivity_status} ==~ UNREACHABLE) {
+                    echo "Playbook not started because syntax check not successfully passed."
                 }
                 else {
                     sh "ansible-playbook -i temp_git/hosts ${playbook_name} --tags nginx"
