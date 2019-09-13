@@ -27,8 +27,8 @@ pipeline {
                    }
         }
         stage("Run ansible-playbook") {
-            steps{
-                script{
+            steps {
+                script {
                     if (${playbook_name} == null || ${playbook_name}.length() == 0) {
                         echo "ANSIBLE PLAYBOOK not executed due to syntax problem"
                         }
@@ -38,10 +38,10 @@ pipeline {
                        }
                  }
         }
-        }
+    }
     post {
         always {
             sh 'rm -Rd temp_git'
                }
           }
-     }
+}
