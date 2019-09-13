@@ -16,6 +16,7 @@ pipeline {
                 script{
                     git_dir= sh 'mkdir -p $(date +%N)_temp_git'
                        }
+                echo "GIT DIR = ${git_dir}"
                 sh "git clone https://github.com/Kw1nT/nginx_conf_update ${git_dir}"
                }
             }
