@@ -28,7 +28,7 @@ pipeline {
         }
         stage("Run ansible-playbook") {
             steps {
-                 sh "ansible-playbook -i temp_git/hosts ${playbook_name} --tags nginx
+                 sh "ansible-playbook -i temp_git/hosts ${playbook_name} --tags nginx"
                  }
         }
     }
