@@ -38,7 +38,7 @@ pipeline {
         stage("Run ansible-playbook") {
             steps {
                 script{
-                    if (playbook_name.isEmpty() || "${connectivity_status}" ==~ /UNREACHABLE/) {
+                    if (playbook_name.isEmpty() || connectivity_status.contains("UNREACHABLE") {
                     echo "Playbook not started because syntax check not successfully passed."
                 }
                 else {
