@@ -1,2 +1,2 @@
 [local_ip]
-ua-vn-bob02 ansible_host=172.31.50.99 ansible_ssh_user=root
+ua-vn-bob02 ansible_host=172.31.41.95 ansible_ssh_user=root
