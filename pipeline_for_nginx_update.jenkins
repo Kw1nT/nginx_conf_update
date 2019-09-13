@@ -27,7 +27,7 @@ pipeline {
                    }
         }
         stage("Run ansible-playbook") {
-            if (playbook_name == null || playbook_name.length() == 0) {
+            if (${playbook_name} == null || ${playbook_name}.length() == 0) {
                 echo "ANSIBLE PLAYBOOK not executed due to syntax problem"
             }
             else {
