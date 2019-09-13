@@ -30,10 +30,10 @@ pipeline {
             steps {
                 script{
                 if (playbook_name.isEmpty()) {
-                sh "ansible-playbook -i temp_git/hosts ${playbook_name} --tags nginx" 
+                    echo "123"
                 }
                 else {
-                    echo "123"
+                    sh "ansible-playbook -i temp_git/hosts ${playbook_name} --tags nginx"
                 }
                }
             }
