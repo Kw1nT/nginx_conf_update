@@ -25,8 +25,12 @@ pipeline {
                     returnStdout: true).trim()
                       }
                 echo "ANSIBLE_PLAYBOOK: ${playbook_name}"
-                sh "ansible-playbook -i temp_git/hosts ${playbook_name} --tags nginx"
-                    }
+                try {
+                    sh "ansible-playbook -i temp_git/hosts ${playbook_name} --tags nginx"
+                } catch (err){ 
+                    echo "something failed"
+                   }
+                }
             }
         stage("Remove temporary directory") {
             steps {
