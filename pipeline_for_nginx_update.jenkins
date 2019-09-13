@@ -27,7 +27,12 @@ pipeline {
                    }
         }
         stage("Run ansible-playbook") {
-              steps{
+            when {
+                allOf {
+                    expression {env.playbook_name != null }
+                       }
+                 }
+            steps{
                   sh "ansible-playbook -i temp_git/hosts ${playbook_name} --tags nginx"
                   }
         }
