@@ -29,7 +29,7 @@ pipeline {
         stage("Run ansible-playbook") {
             when {
                 allOf {
-                    expression {env.playbook_name != null }
+                    expression {${playbook_name} != null }
                        }
                  }
             steps{
