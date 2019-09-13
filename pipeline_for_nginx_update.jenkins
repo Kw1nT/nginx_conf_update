@@ -13,31 +13,28 @@ pipeline {
     stages {
         stage("Git clone") {
             steps {
-                script{
-                    git_dir= sh 'mkdir -p $(date +%N)_temp_git'
-                       }
-                echo "GIT DIR = ${git_dir}"
-                sh "git clone https://github.com/Kw1nT/nginx_conf_update ${git_dir}"
+                sh 'mkdir -p temp_git'
+                sh 'git clone https://github.com/Kw1nT/nginx_conf_update temp_git'
                }
             }
         stage("Check playbook syntax") {
             steps {
                 script{
                     playbook_name = sh (
-                        script: '''ansible-playbook --syntax-check -i ${git_dir}/hosts ${git_dir}/common.yml | awk -F\'playbook: \' \'{print $2}\'''',
+                        script: 'ansible-playbook --syntax-check -i temp_git/hosts temp_git/common.yml | awk -F\'playbook: \' \'{print $2}\'',
                     returnStdout: true).trim()
                       }
                    }
         }
         stage("Run ansible-playbook") {
               steps{
-                  sh "ansible-playbook -i ${git_dir}/hosts ${playbook_name} --tags nginx"
+                  sh "ansible-playbook -i temp_git/hosts ${playbook_name} --tags nginx"
                   }
         }
-        stage("Remove temporary directory") {
-            steps {
-                sh "rm -Rd ${git_dir}"
-            }
-          }
         }
+    post {
+        always {
+            sh 'rm -Rd temp_git'
+               }
+          }
      }
