@@ -39,7 +39,7 @@ pipeline {
             steps {
                 script{
                     if (playbook_name.isEmpty() || connectivity_status.contains("UNREACHABLE")) {
-                    echo "Playbook not started because syntax check not successfully passed."
+                    echo "Playbook not started because syntax or network connectivity check not successfully passed."
                 }
                 else {
                     sh "ansible-playbook -i temp_git/hosts ${playbook_name} --tags nginx"
