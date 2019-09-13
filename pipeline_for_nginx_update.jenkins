@@ -24,16 +24,19 @@ pipeline {
                     script: 'ansible-playbook --syntax-check -i temp_git/hosts temp_git/common.yml | awk -F\'playbook: \' \'{print $2}\'',
                     returnStdout: true).trim()
                       }
-                echo "ANSIBLE_PLAYBOOK: ${playbook_name}"
-                script {
+                   }
+        }
+        stage("Run ansible-playbook") {
+              steps{
+                  script{
                     try {
                     sh "ansible-playbook -i temp_git/hosts ${playbook_name} --tags nginx"
                          } catch (err){ 
-                    echo "something failed"
+                    echo "something failed on this step. Please see log file. "
                          }
                        }
                   }
-              }
+        }
         stage("Remove temporary directory") {
             steps {
                 sh 'rm -Rd temp_git'
